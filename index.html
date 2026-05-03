@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Institut Attamayouz</title>
+<style>
+  /* Couleurs principales */
+  :root {
+    --vert: #155d36;
+    --orange: #f1752e;
+    --vert-clair: #e9f5eb;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0; background: white; color: var(--vert);
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 50px; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  header nav a {
+    color: var(--vert);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 600;
+  }
+  header nav a:hover {
+    border-bottom: 2px solid var(--orange);
+  }
+  .btn {
+    background-color: var(--vert);
+    color: white;
+    padding: 10px 20px;
+    border: none; border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn.orange {
+    background-color: var(--orange);
+    margin-left: 10px;
+  }
+  .hero {
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 50px;
+  }
+  .hero-text {
+    max-width: 500px;
+  }
+  .hero-text h1 {
+    font-size: 3em;
+    margin: 0;
+  }
+  .hero-text h2 {
+    font-size: 2.2em;
+    color: var(--orange);
+    margin-top: 0;
+  }
+  .hero-text p {
+    font-size: 1.1em;
+    margin: 20px 0;
+  }
+  .specialites {
+    display: flex; justify-content: space-around; padding: 30px 50px; background-color: var(--vert-clair);
+  }
+  .specialite {
+    background: white;
+    max-width: 180px; padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    text-align: center;
+  }
+  .specialite h3 {
+    color: var(--vert);
+  }
+  .specialite ul {
+    list-style: none; padding: 0;
+    font-size: 0.9em;
+    color: var(--vert);
+  }
+  .specialite ul li {
+    margin: 8px 0;
+  }
+  .specialite button {
+    margin-top: 15px;
+    padding: 7px 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+  .specialite.orange button {
+    background-color: var(--orange);
+    color: white;
+  }
+  .specialite.vert button {
+    background-color: var(--vert);
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div><img src="logo.png" alt="Institut Attamayouz" style="height:50px"></div>
+  <nav>
+    <a href="#">Accueil</a>
+    <a href="#">À propos</a>
+    <a href="#">Nos services</a>
+    <a href="#">Tarifs</a>
+    <a href="#">Contact</a>
+  </nav>
+  <button class="btn">Nous contacter</button>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Institut <span style="color: var(--orange)">Attamayouz</span></h1>
+    <h2>Un seul institut, plusieurs spécialités</h2>
+    <p>Nous accompagnons les enfants, adolescents et adultes à apprendre, comprendre et réussir grâce à des programmes en ligne de qualité.</p>
+    <button class="btn">Je m'inscris maintenant</button>
+    <button class="btn orange">Nous contacter sur WhatsApp</button>
+  </div>
+  <div>
+    <img src="quran-livre.png" alt="Livre ouvert" style="width:300px; border-radius: 50%;">
+  </div>
+</section>
+
+<section class="specialites">
+  <div class="specialite vert">
+    <h3>Sciences islamiques</h3>
+    <ul>
+      <li>✓ Arabe</li>
+      <li>✓ Coran</li>
+      <li>✓ Tarbia islamique</li>
+      <li>✓ Nourania</li>
+    </ul>
+    <button>En savoir plus</button>
+  </div>
+  <div class="specialite orange">
+    <h3>Soutien scolaire & calcul mental</h3>
+    <ul>
+      <li>✓ Toutes les matières</li>
+      <li>✓ Tous les niveaux</li>
+      <li>✓ Calcul mental (Sourouban)</li>
+    </ul>
+    <button>En savoir plus</button>
+  </div>
+  <div class="specialite vert">
+    <h3>Langues & dialectes</h3>
+    <ul>
+      <li>✓ Français</li>
+      <li>✓ Anglais</li>
+      <li>✓ Dialectes arabes</li>
+      <li>✓ Langues africaines</li>
+    </ul>
+    <button>En savoir plus</button>
+  </div>
+  <div class="specialite orange">
+    <h3>Orthophonie & Ergothérapie</h3>
+    <ul>
+      <li>✓ Accompagnement personnalisé</li>
+      <li>✓ En ligne</li>
+      <li>✓ Pour enfants & adultes</li>
+    </ul>
+    <button>En savoir plus</button>
+  </div>
+  <div class="specialite vert">
+    <h3>Formations professionnelles</h3>
+    <ul>
+      <li>✓ Hijama pour femmes</li>
+      <li>✓ Coach Sourouban</li>
+      <li>✓ Nour Al Bayan</li>
+      <li>✓ Et plus encore...</li>
+    </ul>
+    <button>En savoir plus</button>
+  </div>
+</section>
+
+<!-- Plus sections à ajouter selon la maquette (Pourquoi nous choisir, témoignages, footer...) -->
+
+</body>
+</html>
