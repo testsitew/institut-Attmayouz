@@ -1,0 +1,15 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e9f5eb;
+  color: #155d36;
+}
+a {
+  color: #f1752e;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+button {
+  border-radius: 6px;
+}
