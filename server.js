@@ -104,10 +104,14 @@ app.post('/admin/login', async (req, res) => {
   const { username, password } = req.body;
   // ... reste du code
 });
+const ADMIN_USER = 'admin';
+// Remplacez ici par le hash généré à l’étape précédente
+const ADMIN_PASS_HASH = '$2b$10$...'  
+
 app.post('/admin/login', async (req, res) => {
+  console.log('Reçu:', req.body);  // Debug
   const { username, password } = req.body;
-  console.log('Tentative connexion:', username); // Debug
-  
+
   if (username === ADMIN_USER) {
     const match = await bcrypt.compare(password, ADMIN_PASS_HASH);
     if (match) {
