@@ -100,6 +100,11 @@ app.get('/admin/login', (req, res) => {
   res.render('login', { error: null });
 });
 app.post('/admin/login', async (req, res) => {
+  console.log('Reçu username:', req.body.username);
+  console.log('Reçu password:', req.body.password);
+  // Reste de la logique...
+});
+app.post('/admin/login', async (req, res) => {
   console.log('Données reçues:', req.body);  // Debug
   const { username, password } = req.body;
   // ... reste du code
