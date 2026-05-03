@@ -99,7 +99,11 @@ function requireAdmin(req, res, next) {
 app.get('/admin/login', (req, res) => {
   res.render('login', { error: null });
 });
-
+app.post('/admin/login', async (req, res) => {
+  console.log('Données reçues:', req.body);  // Debug
+  const { username, password } = req.body;
+  // ... reste du code
+});
 app.post('/admin/login', async (req, res) => {
   const { username, password } = req.body;
   console.log('Tentative connexion:', username); // Debug
