@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Admin - Gestion Institut Attamayouz</title>
+<link rel="stylesheet" href="/styles.css" />
+<style>
+  body { font-family: Arial,sans-serif; max-width: 1000px; margin: 20px auto; background: #f1f7f3; padding: 20px; }
+  h1 { color: #155d36; }
+  section { background: white; border-radius: 8px; margin-bottom: 25px; padding: 20px; box-shadow: 0 2px 6px #ccc;}
+  label { display: block; margin-top: 10px; font-weight: 600; }
+  textarea { width: 100%; height: 80px; font-size: 14px; margin-top: 8px; }
+  input[type="number"], input[type="text"] { width: 150px; padding: 6px; margin-top: 5px; }
+  button { margin-top: 15px; padding: 10px 25px; font-weight: bold; background: #155d36; border: none; color: white; border-radius: 6px; cursor: pointer; }
+  button:hover { background: #1e7a49; }
+  .logout { float: right; margin-top: -40px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  th { background-color: #155d36; color: white; }
+  img.logo-preview { max-height: 80px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Admin - Gestion du site</h1>
+<a href="/admin/logout" class="logout"><button>Déconnexion</button></a>
+
+<form method="POST" action="/admin/save" enctype="multipart/form-data">
+  
+  <section>
+    <h2>Logo</h2>
+    <% if (data.logo) { %>
+      <img src="<%= data.logo %>" alt="Logo actuel" class="logo-preview" />
+    <% } else { %>
+      <p>Aucun logo chargé.</p>
+    <% } %>
+    <label>Uploader un nouveau logo (taille max 1 Mo):</label>
+    <input type="file" name="logoFile" accept="image/*" />
+  </section>
+  
+  <section>
+    <h2>Numéro WhatsApp</h2>
+    <input type="text" name="whatsapp" value="<%= data.whatsapp %>" placeholder="Ex: 212612345678" />
+  </section>
+
+  <section>
+    <h2>Programmes</h2>
+    <% data.programmes.forEach(prog => { %>
+      <div style="margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+        <h3><%= prog.nom %></h3>
+        <strong>Matières :</strong>
+        <ul>
+          <% prog.matieres.forEach(mat => { %>
+            <li><%= mat %></li>
+          <% }) %>
+        </ul>
+        <label>Description :</label>
+        <textarea name="desc-<%= prog.id %>"><%= prog.description %></textarea>
+        <label>Tarif (€) :</label>
+        <input type="number" name="tarif-<%= prog.id %>" value="<%= prog.tarif %>" min="0" />
+      </div>
+    <% }) %>
+  </section>
+
+  <button type="submit">Sauvegarder les modifications</button>
+</form>
+
+<section>
+  <h2>Inscriptions reçues</h2>
+  <% if(data.inscriptions.length === 0) { %>
+    <p>Aucune inscription reçue.</p>
+  <% } else { %>
+    <table>
+      <thead><tr><th>Nom</th><th>Prénom</th><th>Email</th><th>Programme</th><th>Supprimer</th></tr></thead>
+      <tbody>
+    <% data.inscriptions.forEach((insc, index) => { %>
+      <tr>
+        <td><%= insc.nom %></td>
+        <td><%= insc.prenom %></td>
+        <td><%= insc.email %></td>
+        <td><%= insc.programme %></td>
+        <td>
+          <form method="POST" action="/admin/inscriptions/delete" onsubmit="return confirm('Confirmez-vous la suppression ?')">
+            <input type="hidden" name="index" value="<%= index %>" />
+            <button type="submit">Supprimer</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+</body>
+</html>
