@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Admin - Gestion du site</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  label, input, textarea, select, button { display:block; margin: 10px 0; }
+  textarea { width: 400px; height: 100px; }
+</style>
+</head>
+<body>
+<h1>Admin : Gestion des contenus</h1>
+
+<!-- Gestion logo -->
+<section>
+  <h2>Logo</h2>
+  <form id="logoForm" enctype="multipart/form-data">
+    <input type="file" name="logoFile" accept="image/*" />
+    <button type="submit">Uploader</button>
+  </form>
+</section>
+
+<!-- Gestion descriptions des pages -->
+<section>
+  <h2>Modifier la description d'un programme</h2>
+  <form id="descForm">
+    <label for="programmeSelect">Sélectionner un programme :</label>
+    <select id="programmeSelect" name="programme">
+      <option value="sciences-islamiques">Sciences islamiques</option>
+      <option value="soutien-scolaire">Soutien scolaire & calcul mental</option>
+      <option value="langues-dialectes">Langues & dialectes</option>
+      <option value="orthophonie-ergotherapie">Orthophonie & Ergothérapie</option>
+      <option value="formations-pro">Formations professionnelles</option>
+    </select>
+    <label for="description">Description :</label>
+    <textarea id="description" name="description"></textarea>
+    <button type="submit">Enregistrer</button>
+  </form>
+</section>
+
+<!-- Gestion tarifs -->
+<section>
+  <h2>Gestion des tarifs</h2>
+  <form id="tarifsForm">
+    <label for="programmeTarif">Programme :</label>
+    <select id="programmeTarif" name="programme">
+      <option value="sciences-islamiques">Sciences islamiques</option>
+      <option value="soutien-scolaire">Soutien scolaire & calcul mental</option>
+      <option value="langues-dialectes">Langues & dialectes</option>
+      <option value="orthophonie-ergotherapie">Orthophonie & Ergothérapie</option>
+      <option value="formations-pro">Formations professionnelles</option>
+    </select>
+    <label for="tarif">Tarif (€) :</label>
+    <input type="number" id="tarif" name="tarif" min="0" />
+    <button type="submit">Modifier</button>
+  </form>
+</section>
+
+<!-- Gestion inscriptions -->
+<section>
+  <h2>Inscriptions reçues</h2>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Nom</th><th>Prénom</th><th>Email</th><th>Programme</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="inscriptionsListe">
+      <!-- Inscription chargées ici -->
+    </tbody>
+  </table>
+</section>
+
+<!-- Gestion numéro WhatsApp -->
+<section>
+  <h2>Numéros WhatsApp</h2>
+  <form id="whatsappForm">
+    <label for="whatsappNumber">Numéro (ex: 212612345678) :</label>
+    <input type="text" id="whatsappNumber" name="whatsappNumber" />
+    <button type="submit">Ajouter/Modifier</button>
+  </form>
+</section>
+
+<script>
+// Ici vous ajouteriez le code JS pour récupérer et envoyer les données vers backend
+// Exemple : fetch API pour charger/enregistrer (non inclus ici)
+
+</script>
+</body>
+</html>
