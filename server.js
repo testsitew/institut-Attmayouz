@@ -73,34 +73,37 @@ app.use(session({
 
 // View engine
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 
 // Multer config pour logo upload
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, './public/uploads/'),
+  destination: (req, file, cb) => {
+    fs.mkdirSync('./public/uploads', { recursive: true });
+    cb(null, './public/uploads/');
+  },
   filename: (req, file, cb) => cb(null, 'logo' + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
-// Identifiants admin (mot de passe hashé)
+// Identifiants admin
 const ADMIN_USER = 'admin';
-const ADMIN_PASS_HASH = '$2b$10$5V7Y6WXJhpF8kOTpm3WHSu1iVDC2g0UvsTclW9XsItTzMN.l7ZkHG'; 
-// hash de MotDePasseSecurise123!
+const ADMIN_PASS_HASH = '$2b$10$5V7Y6WXJhpF8kOTpm3WHSu1iVDC2g0UvsTclW9XsItTzMN.l7ZkHG'; // MotDePasseSecurise123!
 
-// Middleware d'authentification pour admin
+// Middleware d'authentification
 function requireAdmin(req, res, next) {
   if (req.session.username === ADMIN_USER) next();
   else res.redirect('/admin/login');
 }
 
-// Routes
-
+// Routes login
 app.get('/admin/login', (req, res) => {
   res.render('login', { error: null });
 });
 
 app.post('/admin/login', async (req, res) => {
   const { username, password } = req.body;
+  console.log('Tentative connexion:', username); // Debug
+  
   if (username === ADMIN_USER) {
     const match = await bcrypt.compare(password, ADMIN_PASS_HASH);
     if (match) {
@@ -117,60 +120,59 @@ app.get('/admin/logout', (req, res) => {
   });
 });
 
+// Route admin
 app.get('/admin', requireAdmin, (req, res) => {
   res.render('admin', { data });
 });
 
+// Sauvegarder modifications
 app.post('/admin/save', requireAdmin, upload.single('logoFile'), (req, res) => {
-  // Mettre à jour logo
-  if(req.file) {
+  if (req.file) {
     data.logo = '/uploads/' + req.file.filename;
   }
-  // Mettre à jour whatsapp
-  if(req.body.whatsapp) {
+  if (req.body.whatsapp) {
     data.whatsapp = req.body.whatsapp.trim();
   }
-  // Mettre à jour programmes (description + tarif)
   data.programmes.forEach((prog) => {
-    if(req.body[`desc-${prog.id}`]) {
+    if (req.body[`desc-${prog.id}`]) {
       prog.description = req.body[`desc-${prog.id}`].trim();
     }
-    if(req.body[`tarif-${prog.id}`]) {
+    if (req.body[`tarif-${prog.id}`]) {
       prog.tarif = parseFloat(req.body[`tarif-${prog.id}`]) || 0;
     }
   });
-  // Sauvegarder dans fichier
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
   res.redirect('/admin');
 });
 
-// API pour ajouter/supprimer inscription (simplifié)
+// Supprimer inscription
 app.post('/admin/inscriptions/delete', requireAdmin, (req, res) => {
   const index = parseInt(req.body.index);
-  if(!isNaN(index) && index >=0 && index < data.inscriptions.length) {
-    data.inscriptions.splice(index,1);
+  if (!isNaN(index) && index >= 0 && index < data.inscriptions.length) {
+    data.inscriptions.splice(index, 1);
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
   }
   res.redirect('/admin');
 });
 
-// Route publique pour inscription (exemple simple enregistrant dans data.json)
+// Page inscription publique
 app.get('/inscription', (req, res) => {
-  const programmes = data.programmes;
-  res.render('inscription', { programmes, whatsapp: data.whatsapp });
+  res.render('inscription', { programmes: data.programmes, whatsapp: data.whatsapp });
 });
 
 app.post('/inscription', (req, res) => {
   const { nom, prenom, email, programme } = req.body;
-  if(nom && prenom && email && programme) {
-    data.inscriptions.push({ nom, prenom, email, programme });
+  if (nom && prenom && email && programme) {
+    data.inscriptions.push({ nom, prenom, email, programme, date: new Date().toLocaleString() });
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-    return res.send('Merci pour votre inscription. <a href="/">Retour à l\'accueil</a>');
+    return res.send('<h1>Inscription réussie !</h1><a href="/">Retour accueil</a>');
   }
-  res.send('Merci de remplir tous les champs. <a href="/inscription">Réessayer</a>');
+  res.send('Erreur : remplissez tous les champs. <a href="/inscription">Réessayer</a>');
 });
 
-// Démarrage serveur
+// Démarrage
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
+  console.log(`Admin login: http://localhost:${PORT}/admin/login`);
+  console.log(`Login: admin | Mot de passe: MotDePasseSecurise123!`);
 });
