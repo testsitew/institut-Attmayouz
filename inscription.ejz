@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Inscription - Institut Attamayouz</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px auto; max-width: 500px; }
+  form { background: #e9f5eb; padding: 20px; border-radius: 8px; }
+  label { display: block; margin-top: 15px; font-weight: 600; }
+  input, select { width: 100%; padding: 8px; margin-top: 5px; }
+  button { margin-top: 20px; padding: 10px; background: #155d36; color: white; border: none; width: 100%; cursor: pointer; font-weight: bold; }
+  button:hover { background: #134827; }
+</style>
+</head>
+<body>
+
+<h1>Formulaire d'inscription</h1>
+
+<form method="POST" action="/inscription">
+  <label for="nom">Nom :</label>
+  <input type="text" id="nom" name="nom" required />
+
+  <label for="prenom">Prénom :</label>
+  <input type="text" id="prenom" name="prenom" required />
+
+  <label for="email">Email :</label>
+  <input type="email" id="email" name="email" required />
+
+  <label for="programme">Programme :</label>
+  <select id="programme" name="programme" required>
+    <% programmes.forEach(prog => { %>
+      <option value="<%= prog.nom %>"><%= prog.nom %></option>
+    <% }) %>
+  </select>
+
+  <button type="submit">S'inscrire</button>
+</form>
+
+<p>Ou contactez-nous directement sur WhatsApp :</p>
+<a href="https://wa.me/<%= whatsapp %>" target="_blank" rel="noopener noreferrer">
+  <button>WhatsApp</button>
+</a>
+
+</body>
+</html>
