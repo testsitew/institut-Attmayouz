@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Inscription - Institut Attamayouz</title>
+<link rel="stylesheet" href="style.css" />
+<script>
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const programme = urlParams.get('programme');
+    if (programme) {
+      document.getElementById('programme').value = programme;
+    }
+  };
+</script>
+</head>
+<body>
+<header>
+  <h1>Inscription</h1>
+  <nav><a href="index.html">Accueil</a></nav>
+</header>
+
+<main>
+  <form action="/submit-inscription" method="POST">
+    <label for="nom">Nom :</label><br />
+    <input type="text" id="nom" name="nom" required /><br />
+
+    <label for="prenom">Prénom :</label><br />
+    <input type="text" id="prenom" name="prenom" required /><br />
+
+    <label for="email">E-mail :</label><br />
+    <input type="email" id="email" name="email" required /><br />
+
+    <label for="programme">Programme :</label><br />
+    <input type="text" id="programme" name="programme" readonly /><br />
+
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <p>Ou contactez-nous directement sur WhatsApp :</p>
+  <a href="https://wa.me/212612345678" target="_blank" rel="noopener noreferrer">
+    <button>WhatsApp</button>
+  </a>
+</main>
+</body>
+</html>
